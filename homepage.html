@@ -38,26 +38,120 @@
               <a class="nav-link dropdown-toggle btn px-3" href="#" id="choreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Add Chore</a>
               <div class="dropdown-menu p-3" aria-labelledby="choreDropdown" style="min-width: 250px; max-width: 90vw;">
                 <form class="d-flex flex-wrap">
-                  <input type="text" class="form-control form-control-lg me-2 mb-2" placeholder="New Person">
+                  <input type="text" class="form-control form-control-lg me-2 mb-2" placeholder="New Chore">
                   <button class="btn btn-primary btn-lg w-100 w-md-auto" type="submit">Add</button>
                 </form>
               </div>
             </li>
             <!-- Add Person Dropdown -->
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle btn px-3" href="#" id="personDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Add Person</a>
+              <a class="nav-link dropdown-toggle btn px-3" href="#" id="personDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Create Group</a>
               <div class="dropdown-menu p-3" aria-labelledby="personDropdown" style="min-width: 250px; max-width: 90vw;">
                 <form class="d-flex flex-wrap">
-                  <input type="text" class="form-control form-control-lg me-2 mb-2" placeholder="New Person">
+                  <input type="text" class="form-control form-control-lg me-2 mb-2" placeholder="Group Name">
                   <button class="btn btn-primary btn-lg w-100 w-md-auto" type="submit">Add</button>
                 </form>
               </div>
             </li>
+            <li class="nav-item"><a class="nav-link btn px-3" href="index.html">Log out</a></li>
           </ul>
         </div>
     </nav>
 
-    <h1>Hey, Claire!</h1>
+    <h1>Hey, <span id="username"></span>!</h1>
     <h2>Your tasks this week are:</h2>
-</body>
+
+    <ul id="choreList" class="list-group mb-3"></ul>
+
+    <form id="navbarChoreForm" class="d-flex flex-wrap">
+  <input type="text" id="navbarChoreInput" class="form-control form-control-lg me-2 mb-2" placeholder="New Chore">
+  <button class="btn btn-primary btn-lg w-100 w-md-auto" type="submit">Add</button>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Get the logged-in user
+  const currentUserStr = localStorage.getItem('currentUser');
+  if (!currentUserStr) {
+    // No user logged in, redirect to login page
+    window.location.href = "index.html";
+    return;
+  }
+  const currentUser = JSON.parse(currentUserStr);
+  document.getElementById('username').textContent = currentUser.name;
+
+  // Chore list elements
+  const navbarChoreForm = document.getElementById('navbarChoreForm');
+  const navbarChoreInput = document.getElementById('navbarChoreInput');
+  const choreList = document.getElementById('choreList');
+
+  // Load chores from localStorage
+  const savedChores = JSON.parse(localStorage.getItem('chores')) || [];
+  savedChores.forEach(chore => addChoreToList(chore.text, chore.done));
+
+  // Helper function to add a chore
+  function addChoreToList(choreText, done = false) {
+    const li = document.createElement('li');
+    li.className = "list-group-item d-flex justify-content-between align-items-center";
+
+    const span = document.createElement('span');
+    span.textContent = choreText;
+    if (done) span.style.textDecoration = "line-through";
+    li.appendChild(span);
+
+    const btnContainer = document.createElement('div');
+
+    // Mark as done button
+    const doneBtn = document.createElement('button');
+    doneBtn.textContent = "✅";
+    doneBtn.className = "btn btn-sm btn-success me-2";
+    doneBtn.addEventListener('click', () => {
+      span.style.textDecoration = span.style.textDecoration === "line-through" ? "" : "line-through";
+      updateLocalStorage();
+    });
+
+    // Delete button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = "❌";
+    deleteBtn.className = "btn btn-sm btn-danger";
+    deleteBtn.addEventListener('click', () => {
+      li.remove();
+      updateLocalStorage();
+    });
+
+    btnContainer.appendChild(doneBtn);
+    btnContainer.appendChild(deleteBtn);
+    li.appendChild(btnContainer);
+
+    choreList.appendChild(li);
+    updateLocalStorage();
+  }
+
+  // Update localStorage whenever list changes
+  function updateLocalStorage() {
+    const chores = [];
+    choreList.querySelectorAll('li').forEach(li => {
+      const text = li.querySelector('span').textContent;
+      const done = li.querySelector('span').style.textDecoration === "line-through";
+      chores.push({ text, done });
+    });
+    localStorage.setItem('chores', JSON.stringify(chores));
+  }
+
+  // Form submission for new chore
+  navbarChoreForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const choreText = navbarChoreInput.value.trim();
+    if (choreText !== "") {
+      addChoreToList(choreText);
+      navbarChoreInput.value = "";
+
+      // Close the dropdown if inside one (Bootstrap)
+      const dropdown = bootstrap.Dropdown.getInstance(document.getElementById('choreDropdown'));
+      if (dropdown) dropdown.hide();
+    }
+  });
+});
+</script>
+  </body>
 </html>

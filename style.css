@@ -2,6 +2,8 @@ body {
     font-family: "K2D", sans-serif;
     margin-top: 100px;
     margin-left: 30px;
+    margin-right: 30px;
+    font-size: 20px;
 }
 
 .navbar {
@@ -12,3 +14,18 @@ body {
     color:black !important;
     font-size: 22px;
 }
+
+form {
+    font-family: "K2D", sans-serif;
+    text-align: center;
+}
+
+.intro {
+    text-align: center;
+}
+
+button {
+    background-color: #4da564;
+    width: 90px;
+}
+
