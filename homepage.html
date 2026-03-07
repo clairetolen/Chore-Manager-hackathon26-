@@ -68,90 +68,92 @@
   <button class="btn btn-primary btn-lg w-100 w-md-auto" type="submit">Add</button>
 </form>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  // Get the logged-in user
-  const currentUserStr = localStorage.getItem('currentUser');
-  if (!currentUserStr) {
-    // No user logged in, redirect to login page
-    window.location.href = "index.html";
-    return;
-  }
-  const currentUser = JSON.parse(currentUserStr);
-  document.getElementById('username').textContent = currentUser.name;
 
-  // Chore list elements
-  const navbarChoreForm = document.getElementById('navbarChoreForm');
-  const navbarChoreInput = document.getElementById('navbarChoreInput');
-  const choreList = document.getElementById('choreList');
 
-  // Load chores from localStorage
-  const savedChores = JSON.parse(localStorage.getItem('chores')) || [];
-  savedChores.forEach(chore => addChoreToList(chore.text, chore.done));
+   <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Get the logged-in user
+        const currentUserStr = localStorage.getItem('currentUser');
+        if (!currentUserStr) {
+          // No user logged in, redirect to login page
+          window.location.href = "index.html";
+          return;
+        }
+        const currentUser = JSON.parse(currentUserStr);
+        document.getElementById('username').textContent = currentUser.name;
 
-  // Helper function to add a chore
-  function addChoreToList(choreText, done = false) {
-    const li = document.createElement('li');
-    li.className = "list-group-item d-flex justify-content-between align-items-center";
+        // Chore list elements
+        const navbarChoreForm = document.getElementById('navbarChoreForm');
+        const navbarChoreInput = document.getElementById('navbarChoreInput');
+        const choreList = document.getElementById('choreList');
 
-    const span = document.createElement('span');
-    span.textContent = choreText;
-    if (done) span.style.textDecoration = "line-through";
-    li.appendChild(span);
+        // Load chores from localStorage
+        const savedChores = JSON.parse(localStorage.getItem('chores')) || [];
+        savedChores.forEach(chore => addChoreToList(chore.text, chore.done));
 
-    const btnContainer = document.createElement('div');
+        // Helper function to add a chore
+        function addChoreToList(choreText, done = false) {
+          const li = document.createElement('li');
+          li.className = "list-group-item d-flex justify-content-between align-items-center";
 
-    // Mark as done button
-    const doneBtn = document.createElement('button');
-    doneBtn.textContent = "✅";
-    doneBtn.className = "btn btn-sm btn-success me-2";
-    doneBtn.addEventListener('click', () => {
-      span.style.textDecoration = span.style.textDecoration === "line-through" ? "" : "line-through";
-      updateLocalStorage();
-    });
+          const span = document.createElement('span');
+          span.textContent = choreText;
+          if (done) span.style.textDecoration = "line-through";
+          li.appendChild(span);
 
-    // Delete button
-    const deleteBtn = document.createElement('button');
-    deleteBtn.textContent = "❌";
-    deleteBtn.className = "btn btn-sm btn-danger";
-    deleteBtn.addEventListener('click', () => {
-      li.remove();
-      updateLocalStorage();
-    });
+          const btnContainer = document.createElement('div');
 
-    btnContainer.appendChild(doneBtn);
-    btnContainer.appendChild(deleteBtn);
-    li.appendChild(btnContainer);
+          // Mark as done button
+          const doneBtn = document.createElement('button');
+          doneBtn.textContent = "✅";
+          doneBtn.className = "btn btn-sm btn-success me-2";
+          doneBtn.addEventListener('click', () => {
+            span.style.textDecoration = span.style.textDecoration === "line-through" ? "" : "line-through";
+            updateLocalStorage();
+          });
 
-    choreList.appendChild(li);
-    updateLocalStorage();
-  }
+          // Delete button
+          const deleteBtn = document.createElement('button');
+          deleteBtn.textContent = "❌";
+          deleteBtn.className = "btn btn-sm btn-danger";
+          deleteBtn.addEventListener('click', () => {
+            li.remove();
+            updateLocalStorage();
+          });
 
-  // Update localStorage whenever list changes
-  function updateLocalStorage() {
-    const chores = [];
-    choreList.querySelectorAll('li').forEach(li => {
-      const text = li.querySelector('span').textContent;
-      const done = li.querySelector('span').style.textDecoration === "line-through";
-      chores.push({ text, done });
-    });
-    localStorage.setItem('chores', JSON.stringify(chores));
-  }
+          btnContainer.appendChild(doneBtn);
+          btnContainer.appendChild(deleteBtn);
+          li.appendChild(btnContainer);
 
-  // Form submission for new chore
-  navbarChoreForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const choreText = navbarChoreInput.value.trim();
-    if (choreText !== "") {
-      addChoreToList(choreText);
-      navbarChoreInput.value = "";
+          choreList.appendChild(li);
+          updateLocalStorage();
+        }
 
-      // Close the dropdown if inside one (Bootstrap)
-      const dropdown = bootstrap.Dropdown.getInstance(document.getElementById('choreDropdown'));
-      if (dropdown) dropdown.hide();
-    }
-  });
-});
-</script>
+        // Update localStorage whenever list changes
+        function updateLocalStorage() {
+          const chores = [];
+          choreList.querySelectorAll('li').forEach(li => {
+            const text = li.querySelector('span').textContent;
+            const done = li.querySelector('span').style.textDecoration === "line-through";
+            chores.push({ text, done });
+          });
+          localStorage.setItem('chores', JSON.stringify(chores));
+        }
+
+        // Form submission for new chore
+        navbarChoreForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const choreText = navbarChoreInput.value.trim();
+          if (choreText !== "") {
+            addChoreToList(choreText);
+            navbarChoreInput.value = "";
+
+            // Close the dropdown if inside one (Bootstrap)
+            const dropdown = bootstrap.Dropdown.getInstance(document.getElementById('choreDropdown'));
+            if (dropdown) dropdown.hide();
+          }
+        });
+      });
+    </script>
   </body>
 </html>
