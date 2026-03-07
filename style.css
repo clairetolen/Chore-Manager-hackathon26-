@@ -1,0 +1,14 @@
+body {
+    font-family: "K2D", sans-serif;
+    margin-top: 100px;
+    margin-left: 30px;
+}
+
+.navbar {
+    background-color: #B0D4A9;
+}
+
+.navbar .nav-link, .navbar-brand {
+    color:black !important;
+    font-size: 22px;
+}
