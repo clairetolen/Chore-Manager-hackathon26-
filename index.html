@@ -3,28 +3,35 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Chore Manager Login</title>
   </head>
+
+
   <body>
-    <form action="homepage.html">
+    <form id = "login-form">
       <h2>Login</h2>
       <label>Name</label>
-      <input type ="text"> 
+      <input type ="text" id = "loginName"> 
 
       <label>Password</label>
-      <input type = "password">
+      <input type = "password" id = "loginPassword">
 
       <button type = "submit"> Login</button>
      </form>
-    <form action="homepage.html">
+
+     <!--create an account-->
+
+    <form id ="signup-form">
     <h2>Create Account</h2>
     <label> Name</label>
-    <input type="text">
+    <input type="text" id = "signupName">
     <label>Password</label>
-    <input type = "password">
+    <input type = "password" id = "signupPassword">
 
     <button type = "submit"> Create</button>
     </form>
-
+   
+<script src="auth.js"></script>
+  
   </body>
   </html>
