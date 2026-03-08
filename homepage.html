@@ -37,7 +37,7 @@
           <div class="dropdown-menu p-3" aria-labelledby="choreDropdown" style="min-width: 250px; max-width: 90vw;">
             <form id="navbarChoreForm" class="d-flex flex-wrap">
               <input type="text" id="navbarChoreInput" class="form-control form-control-lg me-2 mb-2" placeholder="New Chore" required>
-              <button class="btn btn-primary btn-lg w-100 w-md-auto" type="submit">Add</button>
+              <button class="btn addbtn btn-primary btn-lg w-100 w-md-auto" type="submit">Add</button>
             </form>
           </div>
         </li>
@@ -50,7 +50,7 @@
           <div class="dropdown-menu p-3" aria-labelledby="personDropdown" style="min-width: 250px; max-width: 90vw;">
             <form id="groupForm" class="d-flex flex-wrap">
               <input type="text" id="groupInput" class="form-control form-control-lg me-2 mb-2" placeholder="Group Name" required>
-              <button class="btn btn-primary btn-lg w-100 w-md-auto" type="submit">Create / Join</button>
+              <button class="btn addbtn btn-primary btn-lg w-100 w-md-auto" type="submit">Create / Join</button>
             </form>
           </div>
         </li>
@@ -62,10 +62,12 @@
 </nav>
 
 <div class="container mt-5 pt-5">
-  <h1>Hey, <span id="username"></span>!</h1>
+  <h1><strong>Hey, <span id="username"></span>!</strong></h1>
   <h2>Your tasks this week:</h2>
+  <hr>
   <ul id="choreList" class="list-group mb-3"></ul>
 </div>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const currentUserStr = localStorage.getItem('currentUser');
@@ -83,10 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const groupForm = document.getElementById('groupForm');
   const groupInput = document.getElementById('groupInput');
 
-  // Load groups (houses) from localStorage
   let groups = JSON.parse(localStorage.getItem('groups')) || [];
 
-  // --- Helper Functions ---
   function saveGroups() {
     localStorage.setItem('groups', JSON.stringify(groups));
   }
@@ -97,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderChores() {
     choreList.innerHTML = '';
-
     const group = getUserGroup();
     if (!group) {
       const p = document.createElement('p');
@@ -106,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Show current house with leave button
+    // House header and leave button
     const headerDiv = document.createElement('div');
     headerDiv.className = "d-flex justify-content-between align-items-center mb-2";
 
@@ -116,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const leaveBtn = document.createElement('button');
     leaveBtn.textContent = "Leave House";
-    leaveBtn.className = "btn btn-warning btn-sm";
+    leaveBtn.className = "btn leave btn-sm";
     leaveBtn.addEventListener('click', () => {
       group.members = group.members.filter(m => m !== currentUser.name);
       saveGroups();
@@ -126,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     choreList.appendChild(headerDiv);
 
-    // Group chores
+    // Display chores
     group.chores.forEach(chore => {
       const li = document.createElement('li');
       li.className = "list-group-item d-flex justify-content-between align-items-center";
@@ -139,8 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const btnContainer = document.createElement('div');
 
       const doneBtn = document.createElement('button');
-      doneBtn.textContent = "✅";
-      doneBtn.className = "btn btn-sm btn-success me-2";
+      doneBtn.textContent = "Done";
+      doneBtn.className = "btn btn-sm successbtn me-2";
       doneBtn.addEventListener('click', () => {
         chore.done = !chore.done;
         saveGroups();
@@ -148,8 +147,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       const deleteBtn = document.createElement('button');
-      deleteBtn.textContent = "❌";
-      deleteBtn.className = "btn btn-sm btn-danger";
+      deleteBtn.textContent = "Delete";
+      deleteBtn.className = "btn btn-sm deletebtn";
       deleteBtn.addEventListener('click', () => {
         group.chores = group.chores.filter(c => c !== chore);
         saveGroups();
@@ -164,33 +163,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- Group / House Form ---
+  // --- Group Form with password ---
   groupForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const groupName = groupInput.value.trim();
     if (!groupName) return;
 
-    // Remove user from any existing house
-    groups.forEach(g => {
-      g.members = g.members.filter(m => m !== currentUser.name);
-    });
+    let existingGroup = groups.find(g => g.name === groupName);
+    let password = prompt(existingGroup ? "Enter house password to join:" : "Set a password for your new house:");
 
-    // Join existing house or create new one
-    let group = groups.find(g => g.name === groupName);
-    if (!group) {
-      group = { name: groupName, members: [currentUser.name], chores: [] };
-      groups.push(group);
+    if (!password) {
+      alert("Password is required!");
+      return;
+    }
+
+    if (existingGroup) {
+      if (existingGroup.password !== password) {
+        alert("Incorrect password!");
+        return;
+      }
+      groups.forEach(g => g.members = g.members.filter(m => m !== currentUser.name));
+      existingGroup.members.push(currentUser.name);
+      alert(`You have joined house: ${groupName}`);
     } else {
-      group.members.push(currentUser.name);
+      const newGroup = { name: groupName, password: password, members: [currentUser.name], chores: [] };
+      groups.forEach(g => g.members = g.members.filter(m => m !== currentUser.name));
+      groups.push(newGroup);
+      alert(`House created: ${groupName}`);
     }
 
     saveGroups();
     groupInput.value = '';
-    alert(`You are now in house: ${groupName}`);
     renderChores();
   });
 
-  // --- Chore Form ---
+  // --- Chore Form with assignee selection ---
   navbarChoreForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const choreText = navbarChoreInput.value.trim();
@@ -202,11 +209,14 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Assign chore randomly to a member of the house
-    const randomMember = group.members[Math.floor(Math.random() * group.members.length)];
-    const newChore = { text: choreText, assignedTo: randomMember, done: false };
-    group.chores.push(newChore);
+    // Ask user who to assign the chore to
+    let assignee = prompt(`Assign chore to (choose from: ${group.members.join(', ')}):`);
+    if (!assignee || !group.members.includes(assignee)) {
+      alert("Invalid assignee! Chore not added.");
+      return;
+    }
 
+    group.chores.push({ text: choreText, assignedTo: assignee, done: false });
     saveGroups();
     navbarChoreInput.value = '';
     renderChores();
@@ -215,9 +225,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (dropdown) dropdown.hide();
   });
 
-  // Initial render
   renderChores();
 });
 </script>
+
 </body>
 </html>

@@ -4,10 +4,11 @@ body {
     margin-left: 30px;
     margin-right: 30px;
     font-size: 20px;
+    background-color: #d2ebcd;
 }
 
-.navbar {
-    background-color: #B0D4A9;
+.navbar, .leave, .successbtn  {
+    background-color: #6F9A7C;
 }
 
 .navbar .nav-link, .navbar-brand {
@@ -29,3 +30,10 @@ button {
     width: 90px;
 }
 
+.addbtn:hover {
+    background-color:#9ec4e0;
+}
+
+.deletebtn, .addbtn {
+    background-color: #749AB5;
+}
