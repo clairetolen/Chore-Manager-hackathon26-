@@ -33,16 +33,25 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-            <!-- Add Chore Dropdown -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle btn px-3" href="#" id="choreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Add Chore</a>
-              <div class="dropdown-menu p-3" aria-labelledby="choreDropdown" style="min-width: 250px; max-width: 90vw;">
-                <form class="d-flex flex-wrap">
-                  <input type="text" class="form-control form-control-lg me-2 mb-2" placeholder="New Chore">
-                  <button class="btn btn-primary btn-lg w-100 w-md-auto" type="submit">Add</button>
-                </form>
-              </div>
-            </li>
+            
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle btn px-3" href="#" id="choreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Add Chore
+                </a>
+
+                <div class="dropdown-menu p-3" aria-labelledby="choreDropdown" style="min-width: 250px; max-width: 90vw;">
+                  <form id="navbarChoreForm" class="d-flex flex-wrap">
+                    <input 
+                      type="text" 
+                      id="navbarChoreInput" 
+                      class="form-control form-control-lg me-2 mb-2" 
+                      placeholder="New Chore"
+                    >
+                    <button class="btn btn-primary btn-lg w-100 w-md-auto" type="submit">Add</button>
+                  </form>
+                </div>
+              </li>
+
             <!-- Add Person Dropdown -->
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle btn px-3" href="#" id="personDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Create Group</a>
@@ -62,13 +71,6 @@
     <h2>Your tasks this week are:</h2>
 
     <ul id="choreList" class="list-group mb-3"></ul>
-
-    <form id="navbarChoreForm" class="d-flex flex-wrap">
-  <input type="text" id="navbarChoreInput" class="form-control form-control-lg me-2 mb-2" placeholder="New Chore">
-  <button class="btn btn-primary btn-lg w-100 w-md-auto" type="submit">Add</button>
-</form>
-
-
 
    <script>
       document.addEventListener('DOMContentLoaded', () => {
