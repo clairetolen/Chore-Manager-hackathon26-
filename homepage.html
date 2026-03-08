@@ -1,161 +1,223 @@
 <!DOCTYPE html>
-<html>  		
-<head>	
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=K2D&display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=K2D&display=swap" rel="stylesheet">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    
-    <link rel="stylesheet" href="style.css">
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="style.css">
 
-    <!-- Bootstrap JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <title>Homepage</title> 
+<title>Homepage</title>
 </head>
-
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-      <div class="container-fluid">
-        <p class="navbar-brand">Chore Manager</p>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-            
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle btn px-3" href="#" id="choreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Add Chore
-                </a>
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <div class="container-fluid">
+    <p class="navbar-brand">Chore Manager</p>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <!-- Add Chore Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle btn px-3" href="#" id="choreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Add Chore
+          </a>
+          <div class="dropdown-menu p-3" aria-labelledby="choreDropdown" style="min-width: 250px; max-width: 90vw;">
+            <form id="navbarChoreForm" class="d-flex flex-wrap">
+              <input type="text" id="navbarChoreInput" class="form-control form-control-lg me-2 mb-2" placeholder="New Chore" required>
+              <button class="btn btn-primary btn-lg w-100 w-md-auto" type="submit">Add</button>
+            </form>
+          </div>
+        </li>
 
-                <div class="dropdown-menu p-3" aria-labelledby="choreDropdown" style="min-width: 250px; max-width: 90vw;">
-                  <form id="navbarChoreForm" class="d-flex flex-wrap">
-                    <input 
-                      type="text" 
-                      id="navbarChoreInput" 
-                      class="form-control form-control-lg me-2 mb-2" 
-                      placeholder="New Chore"
-                    >
-                    <button class="btn btn-primary btn-lg w-100 w-md-auto" type="submit">Add</button>
-                  </form>
-                </div>
-              </li>
+        <!-- Create Group Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle btn px-3" href="#" id="personDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Create / Join Group
+          </a>
+          <div class="dropdown-menu p-3" aria-labelledby="personDropdown" style="min-width: 250px; max-width: 90vw;">
+            <form id="groupForm" class="d-flex flex-wrap">
+              <input type="text" id="groupInput" class="form-control form-control-lg me-2 mb-2" placeholder="Group Name" required>
+              <button class="btn btn-primary btn-lg w-100 w-md-auto" type="submit">Create / Join</button>
+            </form>
+          </div>
+        </li>
 
-            <!-- Add Person Dropdown -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle btn px-3" href="#" id="personDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Create Group</a>
-              <div class="dropdown-menu p-3" aria-labelledby="personDropdown" style="min-width: 250px; max-width: 90vw;">
-                <form class="d-flex flex-wrap">
-                  <input type="text" class="form-control form-control-lg me-2 mb-2" placeholder="Group Name">
-                  <button class="btn btn-primary btn-lg w-100 w-md-auto" type="submit">Add</button>
-                </form>
-              </div>
-            </li>
-            <li class="nav-item"><a class="nav-link btn px-3" href="index.html">Log out</a></li>
-          </ul>
-        </div>
-    </nav>
+        <li class="nav-item"><a class="nav-link btn px-3" href="index.html">Log out</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-    <h1>Hey, <span id="username"></span>!</h1>
-    <h2>Your tasks this week are:</h2>
+<div class="container mt-5 pt-5">
+  <h1>Hey, <span id="username"></span>!</h1>
+  <h2>Your tasks this week:</h2>
+  <ul id="choreList" class="list-group mb-3"></ul>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const currentUserStr = localStorage.getItem('currentUser');
+  if (!currentUserStr) {
+    window.location.href = "index.html";
+    return;
+  }
+  const currentUser = JSON.parse(currentUserStr);
+  document.getElementById('username').textContent = currentUser.name;
 
-    <ul id="choreList" class="list-group mb-3"></ul>
+  // Elements
+  const navbarChoreForm = document.getElementById('navbarChoreForm');
+  const navbarChoreInput = document.getElementById('navbarChoreInput');
+  const choreList = document.getElementById('choreList');
+  const groupForm = document.getElementById('groupForm');
+  const groupInput = document.getElementById('groupInput');
 
-   <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        // Get the logged-in user
-        const currentUserStr = localStorage.getItem('currentUser');
-        if (!currentUserStr) {
-          // No user logged in, redirect to login page
-          window.location.href = "index.html";
-          return;
-        }
-        const currentUser = JSON.parse(currentUserStr);
-        document.getElementById('username').textContent = currentUser.name;
+  // Load groups (houses) from localStorage
+  let groups = JSON.parse(localStorage.getItem('groups')) || [];
 
-        // Chore list elements
-        const navbarChoreForm = document.getElementById('navbarChoreForm');
-        const navbarChoreInput = document.getElementById('navbarChoreInput');
-        const choreList = document.getElementById('choreList');
+  // --- Helper Functions ---
+  function saveGroups() {
+    localStorage.setItem('groups', JSON.stringify(groups));
+  }
 
-        // Load chores from localStorage
-        const savedChores = JSON.parse(localStorage.getItem('chores')) || [];
-        savedChores.forEach(chore => addChoreToList(chore.text, chore.done));
+  function getUserGroup() {
+    return groups.find(g => g.members.includes(currentUser.name));
+  }
 
-        // Helper function to add a chore
-        function addChoreToList(choreText, done = false) {
-          const li = document.createElement('li');
-          li.className = "list-group-item d-flex justify-content-between align-items-center";
+  function renderChores() {
+    choreList.innerHTML = '';
 
-          const span = document.createElement('span');
-          span.textContent = choreText;
-          if (done) span.style.textDecoration = "line-through";
-          li.appendChild(span);
+    const group = getUserGroup();
+    if (!group) {
+      const p = document.createElement('p');
+      p.textContent = "You are not in a house. Join or create one!";
+      choreList.appendChild(p);
+      return;
+    }
 
-          const btnContainer = document.createElement('div');
+    // Show current house with leave button
+    const headerDiv = document.createElement('div');
+    headerDiv.className = "d-flex justify-content-between align-items-center mb-2";
 
-          // Mark as done button
-          const doneBtn = document.createElement('button');
-          doneBtn.textContent = "✅";
-          doneBtn.className = "btn btn-sm btn-success me-2";
-          doneBtn.addEventListener('click', () => {
-            span.style.textDecoration = span.style.textDecoration === "line-through" ? "" : "line-through";
-            updateLocalStorage();
-          });
+    const groupHeader = document.createElement('h3');
+    groupHeader.textContent = `House: ${group.name}`;
+    headerDiv.appendChild(groupHeader);
 
-          // Delete button
-          const deleteBtn = document.createElement('button');
-          deleteBtn.textContent = "❌";
-          deleteBtn.className = "btn btn-sm btn-danger";
-          deleteBtn.addEventListener('click', () => {
-            li.remove();
-            updateLocalStorage();
-          });
+    const leaveBtn = document.createElement('button');
+    leaveBtn.textContent = "Leave House";
+    leaveBtn.className = "btn btn-warning btn-sm";
+    leaveBtn.addEventListener('click', () => {
+      group.members = group.members.filter(m => m !== currentUser.name);
+      saveGroups();
+      renderChores();
+    });
+    headerDiv.appendChild(leaveBtn);
 
-          btnContainer.appendChild(doneBtn);
-          btnContainer.appendChild(deleteBtn);
-          li.appendChild(btnContainer);
+    choreList.appendChild(headerDiv);
 
-          choreList.appendChild(li);
-          updateLocalStorage();
-        }
+    // Group chores
+    group.chores.forEach(chore => {
+      const li = document.createElement('li');
+      li.className = "list-group-item d-flex justify-content-between align-items-center";
 
-        // Update localStorage whenever list changes
-        function updateLocalStorage() {
-          const chores = [];
-          choreList.querySelectorAll('li').forEach(li => {
-            const text = li.querySelector('span').textContent;
-            const done = li.querySelector('span').style.textDecoration === "line-through";
-            chores.push({ text, done });
-          });
-          localStorage.setItem('chores', JSON.stringify(chores));
-        }
+      const span = document.createElement('span');
+      span.textContent = `${chore.text} → ${chore.assignedTo}`;
+      if (chore.done) span.style.textDecoration = "line-through";
+      li.appendChild(span);
 
-        // Form submission for new chore
-        navbarChoreForm.addEventListener('submit', (event) => {
-          event.preventDefault();
-          const choreText = navbarChoreInput.value.trim();
-          if (choreText !== "") {
-            addChoreToList(choreText);
-            navbarChoreInput.value = "";
+      const btnContainer = document.createElement('div');
 
-            // Close the dropdown if inside one (Bootstrap)
-            const dropdown = bootstrap.Dropdown.getInstance(document.getElementById('choreDropdown'));
-            if (dropdown) dropdown.hide();
-          }
-        });
+      const doneBtn = document.createElement('button');
+      doneBtn.textContent = "✅";
+      doneBtn.className = "btn btn-sm btn-success me-2";
+      doneBtn.addEventListener('click', () => {
+        chore.done = !chore.done;
+        saveGroups();
+        renderChores();
       });
-    </script>
-  </body>
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = "❌";
+      deleteBtn.className = "btn btn-sm btn-danger";
+      deleteBtn.addEventListener('click', () => {
+        group.chores = group.chores.filter(c => c !== chore);
+        saveGroups();
+        renderChores();
+      });
+
+      btnContainer.appendChild(doneBtn);
+      btnContainer.appendChild(deleteBtn);
+      li.appendChild(btnContainer);
+
+      choreList.appendChild(li);
+    });
+  }
+
+  // --- Group / House Form ---
+  groupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const groupName = groupInput.value.trim();
+    if (!groupName) return;
+
+    // Remove user from any existing house
+    groups.forEach(g => {
+      g.members = g.members.filter(m => m !== currentUser.name);
+    });
+
+    // Join existing house or create new one
+    let group = groups.find(g => g.name === groupName);
+    if (!group) {
+      group = { name: groupName, members: [currentUser.name], chores: [] };
+      groups.push(group);
+    } else {
+      group.members.push(currentUser.name);
+    }
+
+    saveGroups();
+    groupInput.value = '';
+    alert(`You are now in house: ${groupName}`);
+    renderChores();
+  });
+
+  // --- Chore Form ---
+  navbarChoreForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const choreText = navbarChoreInput.value.trim();
+    if (!choreText) return;
+
+    const group = getUserGroup();
+    if (!group) {
+      alert('Join a house first!');
+      return;
+    }
+
+    // Assign chore randomly to a member of the house
+    const randomMember = group.members[Math.floor(Math.random() * group.members.length)];
+    const newChore = { text: choreText, assignedTo: randomMember, done: false };
+    group.chores.push(newChore);
+
+    saveGroups();
+    navbarChoreInput.value = '';
+    renderChores();
+
+    const dropdown = bootstrap.Dropdown.getInstance(document.getElementById('choreDropdown'));
+    if (dropdown) dropdown.hide();
+  });
+
+  // Initial render
+  renderChores();
+});
+</script>
+</body>
 </html>
