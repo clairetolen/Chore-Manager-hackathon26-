@@ -16,12 +16,8 @@ body {
     font-size: 22px;
 }
 
-form {
+form, .intro{
     font-family: "K2D", sans-serif;
-    text-align: center;
-}
-
-.intro {
     text-align: center;
 }
 
